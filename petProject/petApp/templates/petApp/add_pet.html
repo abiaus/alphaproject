@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .error-message {
+        color: red;
+        font-size: 0.8em;
+        display: none;
+    }
+</style>
+<script>
+    function validateForm(event) {
+        let formIsValid = true;
+
+        // Validate name
+        const nameInput = document.getElementById('id_name');
+        const nameError = document.getElementById('name-error');
+        if (nameInput.value.trim() === '') {
+            nameError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            nameError.style.display = 'none';
+        }
+
+        // Add more validations as needed for other fields
+
+        // Validate species
+        const speciesInput = document.getElementById('id_species');
+        const speciesError = document.getElementById('species-error');
+        if (speciesInput.value.trim() === '') {
+            speciesError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            speciesError.style.display = 'none';
+        }
+
+        // Validate breed
+        const breedInput = document.getElementById('id_breed');
+        const breedError = document.getElementById('breed-error');
+        if (breedInput.value.trim() === '') {
+            breedError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            breedError.style.display = 'none';
+        }
+
+        // Validate color
+        const colorInput = document.getElementById('id_color');
+        const colorError = document.getElementById('color-error');
+        if (colorInput.value.trim() === '') {
+            colorError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            colorError.style.display = 'none';
+        }
+
+        // Validate birth_date
+        const birthDateInput = document.getElementById('id_birth_date');
+        const birthDateError = document.getElementById('birth-date-error');
+        if (birthDateInput.value.trim() === '') {
+            birthDateError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            birthDateError.style.display = 'none';
+        }
+
+        // Validate description
+        const descriptionInput = document.getElementById('id_description');
+        const descriptionError = document.getElementById('description-error');
+        if (descriptionInput.value.trim() === '') {
+            descriptionError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            descriptionError.style.display = 'none';
+        }
+
+        // Validate photo
+        const photoInput = document.getElementById('id_photo');
+        const photoError = document.getElementById('photo-error');
+        if (photoInput.files.length === 0) {
+            photoError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            photoError.style.display = 'none';
+        }
+
+        // Validate phone
+        const phoneInput = document.getElementById('id_phone');
+        const phoneError = document.getElementById('phone-error');
+        if (phoneInput.value.trim() === '') {
+            phoneError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            phoneError.style.display = 'none';
+        }
+
+        // Validate address
+        const addressInput = document.getElementById('id_address');
+        const addressError = document.getElementById('address-error');
+        if (addressInput.value.trim() === '') {
+            addressError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            addressError.style.display = 'none';
+        }
+
+        // Validate vet_location
+        const vetLocationInput = document.getElementById('id_vet_location');
+        const vetLocationError = document.getElementById('vet-location-error');
+        if (vetLocationInput.value.trim() === '') {
+            vetLocationError.style.display = 'block';
+            formIsValid = false;
+        } else {
+            vetLocationError.style.display = 'none';
+}
+
+// Validate medical_records
+const medicalRecordsInput = document.getElementById('id_medical_records');
+const medicalRecordsError = document.getElementById('medical-records-error');
+if (medicalRecordsInput.value.trim() === '') {
+    medicalRecordsError.style.display = 'block';
+    formIsValid = false;
+} else {
+    medicalRecordsError.style.display = 'none';
+}
+
+if (!formIsValid) {
+    event.preventDefault();
+}
+}
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>Agregar mascota</h2>
+            <form method="post" enctype="multipart/form-data" onsubmit="validateForm(event)">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="{{ form.name.auto_id }}" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" value="{{ form.name.value|default:'' }}">
+                  <div id="name-error" class="error-message">Por favor, ingrese el nombre de la mascota.</div>
+              </div>
+    
+              <div class="mb-3">
+                <label for="{{ form.photo.auto_id }}" class="form-label">Foto</label>
+                <input type="file" class="form-control" id="{{ form.photo.auto_id }}" name="{{ form.photo.html_name }}" value="{{ form.photo.value|default:'' }}">
+                <div id="photo-error" class="error-message">Por favor, seleccione una foto de la mascota.</div>
+            </div>
+              <!-- Add more fields here with the same structure as above -->
+  
+              <div class="mb-3">
+                <label for="{{ form.species.auto_id }}" class="form-label">Especie</label>
+                <select class="form-select" id="{{ form.species.auto_id }}" name="{{ form.species.html_name }}">
+                    <option value="" {% if not form.species.value %}selected{% endif %}>-- Selecciona una especie --</option>
+                    {% for species_value, species_display in form.fields.species.choices %}
+                        <option value="{{ species_value }}" {% if form.species.value|default:'' == species_value %}selected{% endif %}>{{ species_display }}</option>
+                    {% endfor %}
+                </select>
+                <div id="species-error" class="error-message">Por favor, ingrese la especie de la mascota.</div>
+            </div>
+            
+  
+              <div class="mb-3">
+                  <label for="{{ form.breed.auto_id }}" class="form-label">Raza</label>
+                  <input type="text" class="form-control" id="{{ form.breed.auto_id }}" name="{{ form.breed.html_name }}" value="{{ form.breed.value|default:'' }}">
+                  <div id="breed-error" class="error-message">Por favor, ingrese la raza de la mascota.</div>
+              </div>
+  
+              <div class="mb-3">
+                  <label for="{{ form.color.auto_id }}" class="form-label">Color</label>
+                  <input type="text" class="form-control" id="{{ form.color.auto_id }}" name="{{ form.color.html_name }}" value="{{ form.color.value|default:'' }}">
+                  <div id="color-error" class="error-message">Por favor, ingrese el color de la mascota.</div>
+              </div>
+  
+              <div class="mb-3">
+                  <label for="{{ form.birth_date.auto_id }}" class="form-label">Fecha de nacimiento</label>
+                  <input type="date" class="form-control" id="{{ form.birth_date.auto_id }}" name="{{ form.birth_date.html_name }}" value="{{ form.birth_date.value|default:'' }}">
+                  <div id="birth-date-error" class="error-message">Por favor, ingrese la fecha de nacimiento de la mascota.</div>
+              </div>
+  
+              <div class="mb-3">
+                  <label for="{{ form.description.auto_id }}" class="form-label">Descripción</label>
+                  <textarea class="form-control" id="{{ form.description.auto_id }}" name="{{ form.description.html_name }}" rows="3">{{ form.description.value|default:'' }}</textarea>
+                  <div id="description-error" class="error-message">Por favor, ingrese una descripción de la mascota.</div>
+              </div>
+
+            <div class="mb-3">
+              <label for="{{ form.phone.auto_id }}" class="form-label">Teléfono de contacto</label>
+              <input type="tel" class="form-control" id="{{ form.phone.auto_id }}" name="{{ form.phone.html_name }}" value="{{ form.phone.value|default:'' }}">
+              <div id="phone-error" class="error-message">Por favor, ingrese un teléfono de contacto.</div>
+          </div>
+
+          <div class="mb-3">
+              <label for="{{ form.address.auto_id }}" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" value="{{ form.address.value|default:'' }}">
+              <div id="address-error" class="error-message">Por favor, ingrese la dirección de la mascota.</div>
+          </div>
+
+          <div class="mb-3">
+              <label for="{{ form.vet_location.auto_id }}" class="form-label">Ubicación del veterinario</label>
+              <input type="text" class="form-control" id="{{ form.vet_location.auto_id }}" name="{{ form.vet_location.html_name }}" value="{{ form.vet_location.value|default:'' }}">
+              <div id="vet-location-error" class="error-message">Por favor, ingrese la ubicación del veterinario de la mascota.</div>
+          </div>
+
+          <div class="mb-3">
+              <label for="{{ form.medical_records.auto_id }}" class="form-label">Historial médico</label>
+              <textarea class="form-control" id="{{ form.medical_records.auto_id }}" name="{{ form.medical_records.html_name }}" rows="3">{{ form.medical_records.value|default:'' }}</textarea>
+              <div id="medical-records-error" class="error-message">Por favor, ingrese el historial médico de la mascota.</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Agregar mascota</button>
+      </form>
+  </div>
+</div>
+</div>
+{% endblock %}
+                

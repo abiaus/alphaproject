@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Editar preferencias de visibilidad para {{ pet.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in visible_fields %}
+            <div>
+                <input type="checkbox" name="{{ field.field_name }}" id="{{ field.field_name }}" {% if field.visible %}checked{% endif %}>
+                <label for="{{ field.field_name }}">Mostrar {{ field.field_name }} en el perfil público</label>
+            </div>
+        {% endfor %}
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Editar visibilidad de campos del perfil de {{ pet.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+      <thead>
+        <tr>
+          <th>Field name</th>
+          <th>Visible</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for form in formset %}
+          {{ form.id }}
+          <tr>
+            <td>{{ form.instance.field_name }}</td>
+            <td>{{ form.visible }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit">Guardar cambios</button>
+  </form>
+{% endblock %}

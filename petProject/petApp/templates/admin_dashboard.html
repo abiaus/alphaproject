@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Panel de administrador</h2>
+  <h3>Dueños</h3>
+  <ul>
+    {% for owner in owners %}
+      <li>{{ owner.username }}</li>
+    {% endfor %}
+  </ul>
+  <h3>Mascotas</h3>
+  <ul>
+    {% for pet in pets %}
+      <li>
+        {{ pet.name }} (ID: {{ pet.id }}, UUID: {{ pet.uuid }})
+        <img src="{{ pet.qrcode_set.first.qr_code.url }}" alt="QR code" width="100">
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
