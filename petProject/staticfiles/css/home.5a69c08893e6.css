@@ -1,0 +1,33 @@
+/* Estilos personalizados para la página de inicio */
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+h1.display-4 {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.lead {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+}
+
+.row > .col-md-4 {
+    margin-bottom: 40px;
+}
+
+.col-md-4 > i {
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #ff0800;
+    border-color: #007BFF;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
